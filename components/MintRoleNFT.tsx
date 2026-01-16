@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useBalance } from "wagmi";
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { base } from "wagmi/chains";
 // Removed import { parseAbi } from "viem";
@@ -10,6 +11,14 @@ const ROLE_CASTER_NFT_ADDRESS = process.env.NEXT_PUBLIC_ROLE_CASTER_NFT_ADDRESS 
 
 export function MintRoleNFT() {
   const { address, isConnected, chain } = useAccount();
+  // Token holding check: ETH balance
+  const { data: ethBalance, isLoading: isBalanceLoading } = useBalance({
+    address,
+    chainId: base.id,
+    token: undefined, // ETH
+  });
+  // Example: minimum ETH required (0.01 ETH)
+  const MIN_ETH = 0.01;
   const { writeContract, data: hash, isPending, error: writeError } = useWriteContract();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed, error: confirmError } = useWaitForTransactionReceipt({
@@ -38,13 +47,16 @@ export function MintRoleNFT() {
       setMintStatus("Please connect your wallet to Base network.");
       return;
     }
-
+    // Token holding check
+    if (!isBalanceLoading && ethBalance && Number(ethBalance.formatted) < MIN_ETH) {
+      setMintStatus(`Insufficient ETH balance. Minimum required: ${MIN_ETH} ETH.`);
+      return;
+    }
     try {
       setMintStatus("Minting in progress...");
-      // For simplicity, assuming the 'mint' function takes no arguments
       writeContract({
         address: ROLE_CASTER_NFT_ADDRESS,
-        abi: RoleCasterNFT_ABI, // Corrected: Directly use the imported ABI
+        abi: RoleCasterNFT_ABI,
         functionName: "mint",
       });
     } catch (error) {
@@ -59,8 +71,24 @@ export function MintRoleNFT() {
       {isConnected && chain?.id === base.id ? (
         <>
           <p>Connected to Base as: {address}</p>
-          <button onClick={handleMint} disabled={isPending || isConfirming}>
-            {isPending ? "Confirming..." : isConfirming ? "Minting..." : "Mint Role NFT"}
+          {isBalanceLoading ? (
+            <p>Checking ETH balance...</p>
+          ) : ethBalance ? (
+            <p>Your ETH balance: {ethBalance.formatted} {ethBalance.symbol}</p>
+          ) : null}
+          <button
+            onClick={handleMint}
+            disabled={
+              isPending || isConfirming || isBalanceLoading || (ethBalance && Number(ethBalance.formatted) < MIN_ETH)
+            }
+          >
+            {isPending
+              ? "Confirming..."
+              : isConfirming
+              ? "Minting..."
+              : ethBalance && Number(ethBalance.formatted) < MIN_ETH
+              ? `Insufficient ETH (min ${MIN_ETH})`
+              : "Mint Role NFT"}
           </button>
           {mintStatus && <p>{mintStatus}</p>}
           {hash && (
