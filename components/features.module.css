@@ -1,0 +1,815 @@
+/* Shared Feature Component Styles */
+
+/* ============== Common Styles ============== */
+.featureSection {
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+}
+
+.featureTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.featureIcon {
+  font-size: 1.5rem;
+}
+
+/* ============== NFT Gallery Styles ============== */
+.nftGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.nftCard {
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nftCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+}
+
+.nftImage {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nftImage img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.nftInfo {
+  padding: 12px;
+}
+
+.nftName {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.nftRarity {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.rarityCommon { background: #6B7280; }
+.rarityUncommon { background: #10B981; }
+.rarityRare { background: #3B82F6; }
+.rarityEpic { background: #8B5CF6; }
+.rarityLegendary { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+
+.nftAttributes {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.nftAttribute {
+  font-size: 0.7rem;
+  background: rgba(255,255,255,0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ============== Basename Styles ============== */
+.basenameContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+}
+
+.basenameAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.basenameInfo {
+  flex: 1;
+}
+
+.baseName {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #3B82F6;
+}
+
+.baseAddress {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.registerButton {
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.registerButton:hover {
+  opacity: 0.9;
+}
+
+/* ============== Achievement Styles ============== */
+.achievementGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.achievementCard {
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+
+.achievementCard.unlocked {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.achievementCard.locked {
+  opacity: 0.6;
+}
+
+.achievementIcon {
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+}
+
+.achievementInfo {
+  flex: 1;
+}
+
+.achievementName {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.achievementDesc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 8px;
+}
+
+.achievementProgress {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.achievementProgressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.achievementRarity {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+/* ============== Role Gate Styles ============== */
+.roleContainer {
+  text-align: center;
+  padding: 20px;
+}
+
+.roleBadge {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.roleName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.roleFeatures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.roleFeature {
+  background: rgba(255,255,255,0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.roleFeature.active {
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+}
+
+.roleProgress {
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+}
+
+.progressText {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 8px;
+}
+
+/* ============== Bridge Styles ============== */
+.bridgeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bridgeBalances {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.chainBalance {
+  background: rgba(0,0,0,0.3);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.chainName {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+}
+
+.chainAmount {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.bridgeArrow {
+  font-size: 2rem;
+  color: #3B82F6;
+}
+
+.bridgeInput {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.bridgeInput input {
+  flex: 1;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: white;
+  font-size: 1rem;
+}
+
+.bridgeButton {
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.bridgeButton:hover {
+  opacity: 0.9;
+}
+
+.bridgeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============== Gasless Styles ============== */
+.gaslessContainer {
+  text-align: center;
+}
+
+.gaslessStatus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.gaslessIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.gaslessCount {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.gaslessLabel {
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 16px;
+}
+
+.sponsoredActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.sponsoredAction {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid #10B981;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #10B981;
+}
+
+/* ============== Governance Styles ============== */
+.proposalList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.proposalCard {
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.proposalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.proposalTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.proposalStatus {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.statusActive { background: #10B981; }
+.statusPassed { background: #3B82F6; }
+.statusRejected { background: #EF4444; }
+.statusPending { background: #F59E0B; }
+.statusExecuted { background: #8B5CF6; }
+
+.proposalDesc {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.proposalVotes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.voteCount {
+  text-align: center;
+  padding: 8px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+}
+
+.voteLabel {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+}
+
+.voteNumber {
+  font-weight: 700;
+}
+
+.voteNumber.for { color: #10B981; }
+.voteNumber.against { color: #EF4444; }
+.voteNumber.abstain { color: #6B7280; }
+
+.voteButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.voteBtn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.voteBtn:hover {
+  opacity: 0.9;
+}
+
+.voteBtn.for { background: #10B981; color: white; }
+.voteBtn.against { background: #EF4444; color: white; }
+.voteBtn.abstain { background: #6B7280; color: white; }
+
+/* ============== Referral Styles ============== */
+.referralContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.referralStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.statCard {
+  background: rgba(0,0,0,0.3);
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.referralLink {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.referralLink input {
+  flex: 1;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.copyButton {
+  background: #3B82F6;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tierBadge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tierBronze { background: #CD7F32; }
+.tierSilver { background: #C0C0C0; color: #333; }
+.tierGold { background: #FFD700; color: #333; }
+.tierPlatinum { background: linear-gradient(135deg, #E5E4E2, #A9A9A9); color: #333; }
+
+/* ============== Dynamic NFT Styles ============== */
+.dynamicNFTContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .dynamicNFTContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nftPreview {
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.evolutionImage {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.evolutionImage img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.evolutionNovice .evolutionImage { border: 2px solid #6B7280; }
+.evolutionApprentice .evolutionImage { border: 2px solid #3B82F6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+.evolutionMaster .evolutionImage { border: 2px solid #8B5CF6; box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
+.evolutionLegend .evolutionImage { border: 2px solid #F59E0B; box-shadow: 0 0 40px rgba(245, 158, 11, 0.5); animation: legendGlow 2s infinite; }
+
+@keyframes legendGlow {
+  0%, 100% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.5); }
+  50% { box-shadow: 0 0 60px rgba(245, 158, 11, 0.8); }
+}
+
+.evolutionTag {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.levelDisplay {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.nftStats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.xpBar {
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.xpHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.xpProgress {
+  height: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.xpFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+  border-radius: 6px;
+  transition: width 0.5s;
+}
+
+.traitsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.traitCard {
+  background: rgba(0,0,0,0.3);
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.traitName {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+}
+
+.traitValue {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* ============== Leaderboard Styles ============== */
+.leaderboardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.leaderboardHeader {
+  display: grid;
+  grid-template-columns: 60px 1fr 100px 80px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.leaderboardRow {
+  display: grid;
+  grid-template-columns: 60px 1fr 100px 80px;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.leaderboardRow:hover {
+  background: rgba(0,0,0,0.5);
+}
+
+.leaderboardRow.highlight {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.rankCell {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.rank1 { color: #FFD700; }
+.rank2 { color: #C0C0C0; }
+.rank3 { color: #CD7F32; }
+
+.userCell {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-weight: 600;
+}
+
+.userAddress {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.pointsCell {
+  font-weight: 700;
+  text-align: right;
+}
+
+.changeCell {
+  text-align: center;
+  font-weight: 600;
+}
+
+.changeUp { color: #10B981; }
+.changeDown { color: #EF4444; }
+.changeNeutral { color: #6B7280; }
+
+.rewardPool {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.poolAmount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #F59E0B;
+  margin-bottom: 4px;
+}
+
+.poolLabel {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ============== Tab Navigation ============== */
+.tabContainer {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.tab {
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.tab.active {
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  color: white;
+}
+
+/* ============== Empty State ============== */
+.emptyState {
+  text-align: center;
+  padding: 40px;
+  color: rgba(255,255,255,0.6);
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.emptyText {
+  font-size: 1rem;
+}
