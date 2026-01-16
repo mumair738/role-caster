@@ -126,7 +126,7 @@ export function DynamicNFTEvolution() {
           <div style={{ padding: "16px", background: "rgba(0,0,0,0.2)", borderRadius: "12px" }}>
             <h4 style={{ marginBottom: "12px" }}>Evolution Progress</h4>
             <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
-              {(["Novice", "Apprentice", "Master", "Legend"] as const).map((evo, idx) => (
+              {(["Novice", "Apprentice", "Master", "Legend"] as const).map((evo) => (
                 <div 
                   key={evo}
                   style={{ 

@@ -6,7 +6,7 @@ import { ReferralStats, MOCK_REFERRAL_STATS } from "../lib/types";
 import styles from "./features.module.css";
 
 export function ReferralDashboard() {
-  const { isConnected, address } = useAccount();
+  const { isConnected } = useAccount();
   const [stats] = useState<ReferralStats>(MOCK_REFERRAL_STATS);
   const [copied, setCopied] = useState(false);
   const [claiming, setClaiming] = useState(false);

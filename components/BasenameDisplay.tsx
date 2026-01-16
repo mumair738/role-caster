@@ -15,16 +15,6 @@ function useMockBasename(address: string | undefined): BasenameData | null {
       return;
     }
 
-    // Simulate API call with mock data
-    const mockNames: Record<string, BasenameData> = {
-      "0x1234": {
-        name: "cryptoking.base",
-        avatar: "🦁",
-        address: address,
-        isRegistered: true,
-      },
-    };
-
     // 30% chance of having a basename for demo
     const hasBasename = Math.random() > 0.7;
     
