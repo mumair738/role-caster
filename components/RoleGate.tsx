@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAccount, useBalance } from "wagmi";
+import { useAccount, useBalance, useReadContract } from "wagmi";
 import { base } from "wagmi/chains";
-import { UserRole, RoleConfig, ROLE_CONFIGS, MOCK_NFTS } from "../lib/types";
+import { UserRole, RoleConfig, ROLE_CONFIGS } from "../lib/types";
 import styles from "./features.module.css";
 
-// Mock hook to simulate NFT balance
-function useMockNFTBalance(): number {
-  return MOCK_NFTS.length; // Return mock NFT count
-}
+const ROLE_CASTER_NFT_ADDRESS = process.env.NEXT_PUBLIC_ROLE_CASTER_NFT_ADDRESS as `0x${string}`;
+const ROLE_CASTER_NFT_ABI = [{"inputs":[],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"}];
+
+// Mock hook to simulate NFT balance is removed.
 
 function calculateRole(nftBalance: number, ethBalance: number): RoleConfig {
   // Sort configs by requirements (descending) to find highest matching role
@@ -43,7 +43,15 @@ export function RoleGate() {
     chainId: base.id,
   });
   
-  const nftBalance = useMockNFTBalance();
+  const { data: nftBalanceRaw, isFetching: isNFTBalanceLoading } = useReadContract({
+    address: ROLE_CASTER_NFT_ADDRESS,
+    abi: ROLE_CASTER_NFT_ABI,
+    functionName: 'balanceOf',
+    args: [address],
+    query: { enabled: isConnected && !!address }
+  });
+
+  const nftBalance = isConnected && !isNFTBalanceLoading && nftBalanceRaw ? Number(nftBalanceRaw) : 0;
   const ethBalance = ethBalanceData ? parseFloat(ethBalanceData.formatted) : 0;
   
   const [currentRoleConfig, setCurrentRoleConfig] = useState<RoleConfig>(ROLE_CONFIGS[0]);
@@ -58,7 +66,7 @@ export function RoleGate() {
       setCurrentRoleConfig(ROLE_CONFIGS[0]);
       setNextRoleConfig(ROLE_CONFIGS[1]);
     }
-  }, [isConnected, nftBalance, ethBalance]);
+  }, [isConnected, ethBalance, nftBalanceRaw, isNFTBalanceLoading]);
 
   const allFeatures = ["view", "vote", "chat", "earlyAccess", "proposals"];
 
