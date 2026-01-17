@@ -5,7 +5,7 @@ import { useBalance, useAccount, useSwitchChain, useWriteContract, useWaitForTra
 import { base } from "wagmi/chains";
 import RoleCasterNFT_ABI from "../lib/RoleCasterNFT.json";
 
-const ROLE_CASTER_NFT_ADDRESS = process.env.NEXT_PUBLIC_ROLE_CASTER_NFT_ADDRESS as \`0x\${string}\`;
+const ROLE_CASTER_NFT_ADDRESS = process.env.NEXT_PUBLIC_ROLE_CASTER_NFT_ADDRESS as `0x${string}`;
 const MIN_ETH_FOR_MINT = 0.01; // Feature 6 dependency: Simple check
 
 export function MintRoleNFT() {
@@ -65,16 +65,16 @@ export function MintRoleNFT() {
 
   useEffect(() => {
     if (hash) {
-      setMintStatus(\`Transaction sent: \${hash}. Waiting for confirmation...\`);
+      setMintStatus(`Transaction sent: ${hash}. Waiting for confirmation...`);
     }
     if (isConfirmed) {
       setMintStatus("Mint successful!");
     }
     if (writeError) {
-      setMintStatus(\`Mint failed: \${writeError.message}\`);
+      setMintStatus(`Mint failed: ${writeError.message}`);
     }
     if (confirmError) {
-      setMintStatus(\`Confirmation failed: \${confirmError.message}\`);
+      setMintStatus(`Confirmation failed: ${confirmError.message}`);
     }
   }, [hash, isConfirmed, writeError, confirmError]);
 
@@ -89,7 +89,7 @@ export function MintRoleNFT() {
     }
     // Token holding check (Feature 6)
     if (!isBalanceLoading && ethBalance && Number(ethBalance.formatted) < MIN_ETH_FOR_MINT) {
-      setMintStatus(\`Insufficient ETH balance. Minimum required: \${MIN_ETH_FOR_MINT} ETH.\`);
+      setMintStatus(`Insufficient ETH balance. Minimum required: ${MIN_ETH_FOR_MINT} ETH.`);
       return;
     }
     try {
@@ -101,7 +101,7 @@ export function MintRoleNFT() {
       });
     } catch (error) {
       console.error("Minting error:", error);
-      setMintStatus(\`Minting failed: \${(error as Error).message}\`);
+      setMintStatus(`Minting failed: ${(error as Error).message}`);
     }
   };
 
@@ -138,14 +138,14 @@ export function MintRoleNFT() {
               : isConfirming
               ? "Minting..."
               : ethBalance && Number(ethBalance.formatted) < MIN_ETH_FOR_MINT
-              ? \`Insufficient ETH (min \${MIN_ETH_FOR_MINT})\`
+              ? `Insufficient ETH (min ${MIN_ETH_FOR_MINT})`
               : "Mint Role NFT"}
           </button>
           {mintStatus && <p>{mintStatus}</p>}
           {hash && (
             <p>
               Transaction Hash:{" "}
-              <a href={\`https://basescan.org/tx/\${hash}\`} target="_blank" rel="noopener noreferrer">
+              <a href={`https://basescan.org/tx/${hash}`} target="_blank" rel="noopener noreferrer">
                 {hash}
               </a>
             </p>
