@@ -9,18 +9,23 @@ const GM_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_GM_CONTRACT_ADDRESS || "0xYo
 
 type GmActionType = "farcaster" | "base";
 
-const getDailyGmCount = (address: string, type: GmActionType): number => {
+interface GmActionRecord {
+  count: number;
+  points: number;
+}
+
+const getDailyGmRecord = (address: string, type: GmActionType): GmActionRecord => {
   const today = new Date().toDateString();
-  const key = `dailyGmCount-${address}-${type}-${today}`;
-  const count = localStorage.getItem(key);
-  return count ? parseInt(count, 10) : 0;
+  const key = `dailyGmRecord-${address}-${type}-${today}`;
+  const record = localStorage.getItem(key);
+  return record ? JSON.parse(record) : { count: 0, points: 0 };
 };
 
-const incrementDailyGmCount = (address: string, type: GmActionType) => {
+const updateDailyGmRecord = (address: string, type: GmActionType, newPoints: number) => {
   const today = new Date().toDateString();
-  const key = `dailyGmCount-${address}-${type}-${today}`;
-  const currentCount = getDailyGmCount(address, type);
-  localStorage.setItem(key, (currentCount + 1).toString());
+  const key = `dailyGmRecord-${address}-${type}-${today}`;
+  const currentRecord = getDailyGmRecord(address, type);
+  localStorage.setItem(key, JSON.stringify({ count: currentRecord.count + 1, points: currentRecord.points + newPoints }));
 };
 
 export function DailyGmAction() {
@@ -28,17 +33,18 @@ export function DailyGmAction() {
   const chainId = useChainId();
   const isBaseChain = chainId === base.id;
 
-  const [farcasterCount, setFarcasterCount] = useState(0);
-  const [baseCount, setBaseCount] = useState(0);
-
-  const { writeContractAsync } = useWriteContract();
+  const [farcasterRecord, setFarcasterRecord] = useState<GmActionRecord>({ count: 0, points: 0 });
+  const [baseRecord, setBaseRecord] = useState<GmActionRecord>({ count: 0, points: 0 });
+  const [lastEarnedPoints, setLastEarnedPoints] = useState<number | null>(null);
 
   useEffect(() => {
     if (address) {
-      setFarcasterCount(getDailyGmCount(address, "farcaster"));
-      setBaseCount(getDailyGmCount(address, "base"));
+      setFarcasterRecord(getDailyGmRecord(address, "farcaster"));
+      setBaseRecord(getDailyGmRecord(address, "base"));
     }
   }, [address]);
+
+  const { writeContractAsync } = useWriteContract();
 
   const handleGmAction = async (type: GmActionType, gmType: number) => {
     if (!isConnected || !address || !isBaseChain) {
@@ -46,8 +52,8 @@ export function DailyGmAction() {
       return;
     }
 
-    const currentCount = (type === "farcaster" ? farcasterCount : baseCount);
-    if (currentCount >= 2) {
+    const currentRecord = (type === "farcaster" ? farcasterRecord : baseRecord);
+    if (currentRecord.count >= 2) {
       alert(`You have reached the daily limit for ${type} GM actions.`);
       return;
     }
@@ -55,6 +61,7 @@ export function DailyGmAction() {
     try {
       // Simulate contract interaction
       // In a real scenario, you would call your GM contract function here.
+      // A contract function might return points or emit an event with them.
       await writeContractAsync({
         address: GM_CONTRACT_ADDRESS as `0x${string}`,
         abi: RoleCasterNFT_ABI, // Using the placeholder ABI
@@ -62,12 +69,17 @@ export function DailyGmAction() {
         args: [gmType],
       });
 
-      alert(`Successfully sent GM for ${type}!`);
-      incrementDailyGmCount(address, type);
+      // Simulate random point generation (1-100 points)
+      const earnedPoints = Math.floor(Math.random() * 100) + 1;
+
+      alert(`Successfully sent GM for ${type}! You earned ${earnedPoints} points.`);
+      updateDailyGmRecord(address, type, earnedPoints);
+      setLastEarnedPoints(earnedPoints);
+
       if (type === "farcaster") {
-        setFarcasterCount((prev) => prev + 1);
+        setFarcasterRecord((prev) => ({ count: prev.count + 1, points: prev.points + earnedPoints }));
       } else {
-        setBaseCount((prev) => prev + 1);
+        setBaseRecord((prev) => ({ count: prev.count + 1, points: prev.points + earnedPoints }));
       }
     } catch (error) {
       console.error("Error sending GM:", error);
@@ -81,39 +93,48 @@ export function DailyGmAction() {
       {!isConnected && <p>Please connect your wallet.</p>}
       {isConnected && !isBaseChain && <p>Please switch to Base Chain.</p>}
       {isConnected && isBaseChain && (
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button
-            onClick={() => handleGmAction("farcaster", 0)}
-            disabled={farcasterCount >= 2}
-            style={{
-              padding: "10px 15px",
-              backgroundColor: farcasterCount >= 2 ? "#d3d3d3" : "#007bff",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: farcasterCount >= 2 ? "not-allowed" : "pointer",
-            }}
-          >
-            gm farcaster ({farcasterCount}/2)
-          </button>
-          <button
-            onClick={() => handleGmAction("base", 1)}
-            disabled={baseCount >= 2}
-            style={{
-              padding: "10px 15px",
-              backgroundColor: baseCount >= 2 ? "#d3d3d3" : "#28a745",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: baseCount >= 2 ? "not-allowed" : "pointer",
-            }}
-          >
-            gm base ({baseCount}/2)
-          </button>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button
+              onClick={() => handleGmAction("farcaster", 0)}
+              disabled={farcasterRecord.count >= 2}
+              style={{
+                padding: "10px 15px",
+                backgroundColor: farcasterRecord.count >= 2 ? "#d3d3d3" : "#007bff",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: farcasterRecord.count >= 2 ? "not-allowed" : "pointer",
+              }}
+            >
+              gm farcaster ({farcasterRecord.count}/2)
+            </button>
+            <button
+              onClick={() => handleGmAction("base", 1)}
+              disabled={baseRecord.count >= 2}
+              style={{
+                padding: "10px 15px",
+                backgroundColor: baseRecord.count >= 2 ? "#d3d3d3" : "#28a745",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: baseRecord.count >= 2 ? "not-allowed" : "pointer",
+              }}
+            >
+              gm base ({baseRecord.count}/2)
+            </button>
+          </div>
+          <div style={{ marginTop: "10px" }}>
+            <p>Total farcaster GM points today: {farcasterRecord.points}</p>
+            <p>Total base GM points today: {baseRecord.points}</p>
+            {lastEarnedPoints !== null && (
+              <p style={{ color: "green", fontWeight: "bold" }}>You just earned {lastEarnedPoints} points!</p>
+            )}
+          </div>
         </div>
       )}
       <p style={{ marginTop: "10px", fontSize: "0.8em", color: "#666" }}>
-        Note: Daily counts reset every day. Contract address: {GM_CONTRACT_ADDRESS}
+        Note: Daily counts and points reset every day. Contract address: {GM_CONTRACT_ADDRESS}
       </p>
     </div>
   );
