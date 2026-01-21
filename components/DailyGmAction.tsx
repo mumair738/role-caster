@@ -5,7 +5,7 @@ import { useAccount, useChainId, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
 import RoleCasterNFT_ABI from "../lib/RoleCasterNFT.json"; // Using the same ABI for placeholder
 
-const GM_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_GM_CONTRACT_ADDRESS || "0xYourGmContractAddressHere"; // Placeholder
+const GM_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_ROLE_CASTER_NFT_ADDRESS || "0x0000000000000000000000000000000000000000"; // Placeholder
 
 type GmActionType = "farcaster" | "base";
 
