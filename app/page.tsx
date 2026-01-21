@@ -12,9 +12,10 @@ import { GovernanceHub } from "../components/GovernanceHub";
 import { ReferralDashboard } from "../components/ReferralDashboard";
 import { DynamicNFTEvolution } from "../components/DynamicNFTEvolution";
 import { Leaderboard } from "../components/Leaderboard";
+import { DailyGmAction } from "../components/DailyGmAction";
 import styles from "./page.module.css";
 
-type FeatureTab = 
+type FeatureTab =
   | "mint"
   | "gallery"
   | "basename"
@@ -25,7 +26,8 @@ type FeatureTab =
   | "governance"
   | "referral"
   | "evolution"
-  | "leaderboard";
+  | "leaderboard"
+  | "dailyGm";
 
 const FEATURE_TABS: { id: FeatureTab; name: string; icon: string }[] = [
   { id: "mint", name: "Mint", icon: "🎨" },
@@ -39,6 +41,7 @@ const FEATURE_TABS: { id: FeatureTab; name: string; icon: string }[] = [
   { id: "referral", name: "Referral", icon: "👥" },
   { id: "evolution", name: "Evolution", icon: "✨" },
   { id: "leaderboard", name: "Rankings", icon: "📊" },
+  { id: "dailyGm", name: "Daily GM", icon: "☀️" },
 ];
 
 export default function Home() {
@@ -68,6 +71,8 @@ export default function Home() {
         return <DynamicNFTEvolution />;
       case "leaderboard":
         return <Leaderboard />;
+      case "dailyGm":
+        return <DailyGmAction />;
       default:
         return <MintRoleNFT />;
     }
