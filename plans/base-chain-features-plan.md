@@ -29,7 +29,7 @@ graph TB
     end
     
     B --> I
-    A --> D
+    A --> C
 ```
 
 ---
